@@ -43,8 +43,8 @@ output storage_account_connectionstring string = 'DefaultEndpointsProtocol=https
 
 param appservice_plan_name string
 param appservice_plan_location string = resourceGroup().location
-param appservice_plan_sku string ='Y1'
-param appservice_plan_tier string = 'Dynamic'
+param appservice_plan_sku string ='P1v2'
+param appservice_plan_tier string = 'PremiumV2'
 
 resource appservice_plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name:appservice_plan_name
