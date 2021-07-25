@@ -49,6 +49,7 @@ param appservice_plan_tier string = 'Dynamic'
 resource appservice_plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name:appservice_plan_name
   location:appservice_plan_location
+  kind: 'linux'
   sku:{
     name:appservice_plan_sku
     tier:appservice_plan_tier
@@ -71,13 +72,11 @@ param function_app_name string
 resource function_app 'Microsoft.Web/sites@2020-06-01' = {
   name: function_app_name
   location: location
-  kind: 'functionapp'
-  identity: {
-    type: 'SystemAssigned'
-  }
+  kind: 'functionapp,linux'
   properties: {
     serverFarmId: appservice_plan.id
     siteConfig: {
+      linuxFxVersion: 'Python|3.8'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
