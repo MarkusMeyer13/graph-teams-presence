@@ -56,5 +56,14 @@ jobs:
       id: fa
       with:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        package: published
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
         publish-profile: ${{ steps.publishprofile.outputs.profile }}
+        
+    - name: Reset FunctionApp publish profile
+      uses: aliencube/publish-profile-actions@v1
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      with:
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        appName: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        reset: true
