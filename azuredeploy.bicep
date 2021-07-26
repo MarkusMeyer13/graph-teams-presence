@@ -49,7 +49,7 @@ param appservice_plan_tier string = 'Dynamic'
 resource appservice_plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name:appservice_plan_name
   location:appservice_plan_location
-  kind: 'functionapp'
+  kind: 'functionapp,linux'
   sku:{
     name:appservice_plan_sku
     tier:appservice_plan_tier
