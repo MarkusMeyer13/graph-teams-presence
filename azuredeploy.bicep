@@ -76,6 +76,8 @@ resource function_app 'Microsoft.Web/sites@2020-06-01' = {
   properties: {
     serverFarmId: appservice_plan.id
     siteConfig: {
+      linuxFxVersion: 'Python|3.8'
+      use32BitWorkerProcess: false
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
