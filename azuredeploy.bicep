@@ -54,6 +54,10 @@ resource appservice_plan 'Microsoft.Web/serverfarms@2020-12-01' = {
     name:appservice_plan_sku
     tier:appservice_plan_tier
   }
+  properties:{
+    reserved: true
+  }
+  
 }
 
 output appservice_plan_id string = appservice_plan.id
