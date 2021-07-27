@@ -12,9 +12,11 @@
       ]
     },
     {
-      "type": "http",
+      "type": "serviceBus",
       "direction": "out",
-      "name": "$return"
+      "connection": "AzureServiceBusConnectionString",
+      "name": "msg",
+      "topicName ": "t.graph.presence.change",
     }
   ]
 }
