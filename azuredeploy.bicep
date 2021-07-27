@@ -121,9 +121,10 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-01-01-preview' = {
 }
 
 //name: '${service_bus}/${topic.name}/${subscription.name}'
-param service_bus_topic_name string = '${service_bus_name}/t.graph.presence.change'   
+// param service_bus_topic_name string = concat(service_bus.name)   
+// param service_bus_topic_name string = '${service_bus}/t.graph.presence.change'   
 resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics@2021-01-01-preview' = {
-  name: service_bus_topic_name
+  name:  '${service_bus.name}/t.graph.presence.change'   
 }
 
 // var massiveBiceps = [
