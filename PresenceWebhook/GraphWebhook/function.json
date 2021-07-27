@@ -2,7 +2,7 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "authLevel": "Anonymous",
+      "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
@@ -14,9 +14,14 @@
     {
       "type": "serviceBus",
       "direction": "out",
+      "name": "msgOut",
       "connection": "ServiceBusConnection",
-      "name": "msg",
-      "topicName ": "t.graph.presence.change"
+      "topicName": "t.graph.presence.change"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
     }
   ]
 }

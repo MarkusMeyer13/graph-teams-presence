@@ -2,34 +2,15 @@ import logging
 import os
 import azure.functions as func
 
-# def main(req: func.HttpRequest) -> func.HttpResponse:
-#     logging.info('Python HTTP trigger function processed a request.')
-
-#     name = req.params.get('name')
-#     if not name:
-#         try:
-#             req_body = req.get_json()
-#         except ValueError:
-#             pass
-#         else:
-#             name = req_body.get('name')
-
-#     if name:
-#         return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-#     else:
-#         return func.HttpResponse(
-#              "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-#              status_code=200
-#         )
-
-def main(req: func.HttpRequest, msg: func.Out[str]) -> func.HttpResponse:
-
+def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> func.HttpResponse: 
+    
+    logging.info('Python HTTP trigger function processed a request.')
+    
     input_msg = req.params.get('message')
     logging.info(input_msg)
 
     my_app_setting_value = os.environ["ServiceBusConnection"]
     logging.info(my_app_setting_value)
 
-    msg.set(input_msg)
-
-    return 'OK'
+    msgOut.set(input_msg)
+    return func.HttpResponse("OK")
