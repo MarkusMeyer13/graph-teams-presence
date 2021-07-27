@@ -122,7 +122,7 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-01-01-preview' = {
 
 //name: '${service_bus}/${topic.name}/${subscription.name}'
 param service_bus_topic_name string = '${service_bus_name}/t.graph.presence.change'   
-resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = {
+resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics@2021-01-01-preview' = {
   name: service_bus_topic_name
 }
 
