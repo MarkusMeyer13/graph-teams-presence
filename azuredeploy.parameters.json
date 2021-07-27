@@ -10,6 +10,9 @@
       },
       "function_app_name": {
         "value": "func-graph-presence"
+      },
+      "service_bus_name": {
+        "value": "sb-graph-presence"
       }
     }
   }

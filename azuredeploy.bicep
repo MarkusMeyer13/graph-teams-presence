@@ -109,7 +109,7 @@ resource function_app 'Microsoft.Web/sites@2020-06-01' = {
 }
 
 
-param service_bus_name string
+param service_bus_name string 
 resource service_bus 'Microsoft.ServiceBus/namespaces@2021-01-01-preview' = {
   name: service_bus_name
   location: location
