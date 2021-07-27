@@ -15,5 +15,5 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> 
     body = req.get_body()
     logging.info(body.decode("utf-8"))
 
-    msgOut.set(validationToken)
+    msgOut.set(body.decode("utf-8"))
     return func.HttpResponse(validationToken)
