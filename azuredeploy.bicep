@@ -103,10 +103,25 @@ resource function_app 'Microsoft.Web/sites@2020-06-01' = {
           name: 'AzureWebJobsStorage'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storage_account.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storage_account.id, storage_account.apiVersion).keys[0].value}'
         }
+        {
+          name: 'ServiceBusConnection'
+          value: 'Endpoint=sb://${service_bus.name}.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=${listKeys('${service_bus.id}/AuthorizationRules/RootManageSharedAccessKey', service_bus.apiVersion).primaryKey}'
+        }
       ]
     }
   }
 }
+
+// var listKeysEndpoint = '${service_bus.id}/AuthorizationRules/RootManageSharedAccessKey'SharedAccessKey=${listKeys(listKeysEndpoint, service_bus.apiVersion).primaryKey}
+
+// "smsSendPrimaryKey": {
+//   "type": "string",
+//   "value": "[listKeys(resourceId(concat('Microsoft.ServiceBus/namespaces/Queues/AuthorizationRules'),parameters('serviceBusNamespace'),parameters('notificationssmsqueue'),concat(parameters('notificationssmsqueue'),'.send')),'2015-08-01').PrimaryKey]"
+// },
+
+//Endpoint=sb://sb-graph-presence.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=
+//var endpoint = '${service_bus.id}/AuthorizationRules/RootManageSharedAccessKey' ... value: 'Endpoint=sb://${service_bus.name}.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=${listKeys(endpoint, service_bus.apiVersion).primaryKey}'
+
 
 
 param service_bus_name string 
@@ -129,40 +144,3 @@ resource service_bus_topic_subscription 'Microsoft.ServiceBus/namespaces/topics/
 }
 
 
-// var massiveBiceps = [
-//   'Arnold'
-//   'Sylvester'
-//   'Dolph'
-// ]
-
-// resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-01-01-preview' = [for (topic, index) in serviceBusConfig.topics: {
-//   name: '${service_bus}/${topic.name}'
-
-//   resource sub 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = [for subscription in ${topic[index].subscriptions}: {
-//     name: '${service_bus}/${topic.name}/${subscription.name}'
-//   }]
-// }]
-
-// param service_bus_topic_name string = 't.graph.presence.change'
-// resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = {
-//   name: service_bus_topic_name
-// }
-
-// param service_bus_topic_subscription_name string = 't.graph.presence.change'
-// resource service_bus_topic_subscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = {
-//   name: service_bus_topic_subscription_name
-//   properties: {
-//     lockDuration: 'string'
-//     requiresSession: bool
-//     defaultMessageTimeToLive: 'string'
-//     deadLetteringOnFilterEvaluationExceptions: bool
-//     deadLetteringOnMessageExpiration: bool
-//     duplicateDetectionHistoryTimeWindow: 'string'
-//     maxDeliveryCount: int
-//     status: 'string'
-//     enableBatchedOperations: bool
-//     autoDeleteOnIdle: 'string'
-//     forwardTo: 'string'
-//     forwardDeadLetteredMessagesTo: 'string'
-//   }
-// }

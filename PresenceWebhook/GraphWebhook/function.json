@@ -14,9 +14,9 @@
     {
       "type": "serviceBus",
       "direction": "out",
-      "connection": "AzureServiceBusConnectionString",
+      "connection": "%ServiceBusConnection%",
       "name": "msg",
-      "topicName ": "t.graph.presence.change",
+      "topicName ": "t.graph.presence.change"
     }
   ]
 }
