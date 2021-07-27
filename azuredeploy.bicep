@@ -107,3 +107,59 @@ resource function_app 'Microsoft.Web/sites@2020-06-01' = {
     }
   }
 }
+
+
+param service_bus_name string
+resource service_bus 'Microsoft.ServiceBus/namespaces@2021-01-01-preview' = {
+  name: service_bus_name
+  location: location
+  tags: {}
+  sku: {
+    name: 'Basic'
+    tier: 'Basic'
+  }
+}
+
+//name: '${service_bus}/${topic.name}/${subscription.name}'
+param service_bus_topic_name string = '${service_bus_name}/t.graph.presence.change'   
+resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = {
+  name: service_bus_topic_name
+}
+
+// var massiveBiceps = [
+//   'Arnold'
+//   'Sylvester'
+//   'Dolph'
+// ]
+
+// resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-01-01-preview' = [for (topic, index) in serviceBusConfig.topics: {
+//   name: '${service_bus}/${topic.name}'
+
+//   resource sub 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = [for subscription in ${topic[index].subscriptions}: {
+//     name: '${service_bus}/${topic.name}/${subscription.name}'
+//   }]
+// }]
+
+// param service_bus_topic_name string = 't.graph.presence.change'
+// resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = {
+//   name: service_bus_topic_name
+// }
+
+// param service_bus_topic_subscription_name string = 't.graph.presence.change'
+// resource service_bus_topic_subscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = {
+//   name: service_bus_topic_subscription_name
+//   properties: {
+//     lockDuration: 'string'
+//     requiresSession: bool
+//     defaultMessageTimeToLive: 'string'
+//     deadLetteringOnFilterEvaluationExceptions: bool
+//     deadLetteringOnMessageExpiration: bool
+//     duplicateDetectionHistoryTimeWindow: 'string'
+//     maxDeliveryCount: int
+//     status: 'string'
+//     enableBatchedOperations: bool
+//     autoDeleteOnIdle: 'string'
+//     forwardTo: 'string'
+//     forwardDeadLetteredMessagesTo: 'string'
+//   }
+// }
