@@ -7,9 +7,9 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> 
     
     logging.info('Python HTTP trigger function processed a request.')
     validationToken = req.params.get('validationToken')
-    req_body = req.get_json()
-    input_msg = json.dumps(req_body)
+    # req_body = req.get_json()
+    # input_msg = json.dumps(req_body)
     logging.info(validationToken)
 
-    msgOut.set(input_msg)
+    msgOut.set(validationToken)
     return func.HttpResponse(validationToken)
