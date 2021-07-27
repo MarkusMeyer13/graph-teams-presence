@@ -14,7 +14,7 @@
     {
       "type": "serviceBus",
       "direction": "out",
-      "connection": "%ServiceBusConnection%",
+      "connection": "ServiceBusConnection",
       "name": "msg",
       "topicName ": "t.graph.presence.change"
     }
