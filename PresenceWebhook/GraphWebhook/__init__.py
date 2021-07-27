@@ -10,6 +10,10 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> 
     # req_body = req.get_json()
     # input_msg = json.dumps(req_body)
     logging.info(validationToken)
+    logging.info(req.url)
+
+    body = req.get_body()
+    logging.info(body.decode("utf-8"))
 
     msgOut.set(validationToken)
     return func.HttpResponse(validationToken)
