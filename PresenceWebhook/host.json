@@ -11,10 +11,6 @@
               "maxAutoRenewDuration": "00:45:00",
               "maxConcurrentCalls": 25
           }
-      },
-      "cosmosDb": {
-          "connectionMode": "Gateway",
-          "protocol": "Https"
       }
   },
   "logging": {
