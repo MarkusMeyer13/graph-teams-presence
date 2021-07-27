@@ -115,8 +115,8 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-01-01-preview' = {
   location: location
   tags: {}
   sku: {
-    name: 'Basic'
-    tier: 'Basic'
+    name: 'Standard'
+    tier: 'Standard'
   }
 }
 
