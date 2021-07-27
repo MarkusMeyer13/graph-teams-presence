@@ -11,8 +11,8 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> 
     "year": 1964
     }
     properties = {'custom_dimensions': {'key_1': 'value_1', 'key_2': 'value_2'}}
-    logging.info('action', extra=properties)
-    logging.info('Python HTTP trigger function processed a request.', extra=thisdict)
+    logging.Logger.info('action', extra=properties)
+    logging.Logger.info('Python HTTP trigger function processed a request.', extra=thisdict)
     validationToken = req.params.get('validationToken')
     # req_body = req.get_json()
 
