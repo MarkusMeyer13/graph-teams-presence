@@ -5,15 +5,26 @@ import json
 
 def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> func.HttpResponse: 
     
-    logging.info('Python HTTP trigger function processed a request.')
+    thisdict = {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+    }
+    properties = {'custom_dimensions': {'key_1': 'value_1', 'key_2': 'value_2'}}
+    logging.info('action', extra=properties)
+    logging.info('Python HTTP trigger function processed a request.', extra=thisdict)
     validationToken = req.params.get('validationToken')
     # req_body = req.get_json()
-    # input_msg = json.dumps(req_body)
+
     logging.info(validationToken)
     logging.info(req.url)
 
     body = req.get_body()
-    logging.info(body.decode("utf-8"))
+    logging.info(len(body))
+    if len(body) > 0:
+        logging.info(body.decode("utf-8"))
+        msgOut.set(body.decode("utf-8"))
+    else:
+        logging.info("Body is empty")
 
-    msgOut.set(body.decode("utf-8"))
     return func.HttpResponse(validationToken)
