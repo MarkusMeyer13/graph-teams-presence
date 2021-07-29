@@ -103,7 +103,32 @@ resource function_app 'Microsoft.Web/sites@2020-06-01' = {
           name: 'AzureWebJobsStorage'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storage_account.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storage_account.id, storage_account.apiVersion).keys[0].value}'
         }
+        {
+          name: 'ServiceBusConnection'
+          value: 'Endpoint=sb://${service_bus.name}.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=${listKeys('${service_bus.id}/AuthorizationRules/RootManageSharedAccessKey', service_bus.apiVersion).primaryKey}'
+        }
       ]
     }
   }
 }
+
+param service_bus_name string 
+resource service_bus 'Microsoft.ServiceBus/namespaces@2021-01-01-preview' = {
+  name: service_bus_name
+  location: location
+  tags: {}
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
+}
+
+resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics@2021-01-01-preview' = {
+  name:  '${service_bus.name}/t.graph.presence.change'   
+}
+
+resource service_bus_topic_subscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-01-01-preview' = {
+  name:  '${service_bus_topic.name}/s.graph.presence.change.default'   
+}
+
+
