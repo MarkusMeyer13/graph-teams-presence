@@ -26,7 +26,7 @@ handler = AzureLogHandler(connection_string=f'InstrumentationKey={instrucment_ke
 logger = logging.getLogger(__name__)
 logger.addHandler(handler)
 
-def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> func.HttpResponse: 
+def main(req: func.HttpRequest, msgOut: func.Out[str], msgSubscriptionUpdateOut: func.Out[str], context: func.Context)-> func.HttpResponse: 
     span_context = TraceContextPropagator().from_headers({
         "traceparent": context.trace_context.Traceparent,
         "tracestate": context.trace_context.Tracestate
@@ -54,6 +54,7 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> 
         requestBody = body.decode("utf-8") 
         logging.info(requestBody)
         msgOut.set(requestBody)
+        msgSubscriptionUpdateOut.set(requestBody)
         properties["requestBody"] = requestBody
     else:
         logging.info("Body is empty")

@@ -123,6 +123,11 @@ resource service_bus 'Microsoft.ServiceBus/namespaces@2021-01-01-preview' = {
   }
 }
 
+resource service_bus_queue 'Microsoft.ServiceBus/namespaces/queues@2021-01-01-preview' = {
+  name:  '${service_bus.name}/q.graph.presence.subscription.update'   
+}
+
+
 resource service_bus_topic 'Microsoft.ServiceBus/namespaces/topics@2021-01-01-preview' = {
   name:  '${service_bus.name}/t.graph.presence.change'   
 }
