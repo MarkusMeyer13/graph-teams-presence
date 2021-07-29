@@ -47,7 +47,7 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], context: func.Context)-> 
 
     logging.info(validationToken)
     logging.info(req.url)
-
+    properties["validationToken"] = validationToken
     body = req.get_body()
     logging.info(len(body))
     if len(body) > 0:
