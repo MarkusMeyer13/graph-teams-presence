@@ -19,6 +19,13 @@
       "topicName": "t.graph.presence.change"
     },
     {
+      "type": "serviceBus",
+      "direction": "out",
+      "name": "msgSubscriptionUpdateOut",
+      "connection": "ServiceBusConnection",
+      "queueName": "q.graph.presence.subscription.update"
+    },
+    {
       "type": "http",
       "direction": "out",
       "name": "$return"
