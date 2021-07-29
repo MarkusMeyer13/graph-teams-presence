@@ -1,7 +1,9 @@
+from shared_code import Messenger
+from azure.servicebus import ServiceBusClient, ServiceBusMessage
+
 import logging
 import os
 import azure.functions as func
-import json
 
 from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.ext.azure.log_exporter import AzureLogHandler
@@ -18,15 +20,13 @@ if logger.hasHandlers():
 config_integration.trace_integrations(['logging'])
 instrucment_key = os.getenv('APPINSIGHTS_INSTRUMENTATIONKEY')
 
-
-
 exporter = AzureExporter(connection_string=f'InstrumentationKey={instrucment_key}')
 handler = AzureLogHandler(connection_string=f'InstrumentationKey={instrucment_key}')
 
 logger = logging.getLogger(__name__)
 logger.addHandler(handler)
 
-def main(req: func.HttpRequest, msgOut: func.Out[str], msgSubscriptionUpdateOut: func.Out[str], context: func.Context)-> func.HttpResponse: 
+def main(req: func.HttpRequest, msgOut: func.Out[str], msgSubscriptionUpdateOut:  func.Out[str], context: func.Context)-> func.HttpResponse: 
     span_context = TraceContextPropagator().from_headers({
         "traceparent": context.trace_context.Traceparent,
         "tracestate": context.trace_context.Tracestate
@@ -48,13 +48,21 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], msgSubscriptionUpdateOut:
     logging.info(validationToken)
     logging.info(req.url)
     properties["validationToken"] = validationToken
+
     body = req.get_body()
     logging.info(len(body))
+
+    if len(validationToken) > 0:
+        service_bus_connection = os.getenv('ServiceBusConnection')
+               
+        messenger = Messenger.Messenger(service_bus_connection, 'q.graph.presence.subscription.update')
+        messenger.send_single_message("Test")
+
     if len(body) > 0:
         requestBody = body.decode("utf-8") 
         logging.info(requestBody)
         msgOut.set(requestBody)
-        msgSubscriptionUpdateOut.set(requestBody)
+        # msgSubscriptionUpdateOut.set(requestBody)
         properties["requestBody"] = requestBody
     else:
         logging.info("Body is empty")
@@ -65,5 +73,6 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], msgSubscriptionUpdateOut:
     with tracer.span("custom_dimensions_span"):
         properties = properties
         logging.info("Finish", extra=properties)
+
 
     return func.HttpResponse(validationToken)

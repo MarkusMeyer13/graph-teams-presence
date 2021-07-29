@@ -1,5 +1,6 @@
 # Do not include azure-functions-worker as it may conflict with the Azure Functions platform
 
 azure-functions
+azure-servicebus
 opencensus
 opencensus-ext-azure
