@@ -1,4 +1,5 @@
 from azure.servicebus import ServiceBusClient, ServiceBusMessage
+import json
 
 class Messenger:
   def __init__(self, connection_string, queue_name):
@@ -16,3 +17,9 @@ class Messenger:
             self.sender = self.servicebus_client.get_queue_sender(queue_name=self.queue_name)
             self.sender.send_messages(message)
       print("Sent a single message")      
+
+def increment(x):
+  return x + 1
+
+def decrement(x):
+    return x - 1    

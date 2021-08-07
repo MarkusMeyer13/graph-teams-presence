@@ -1,4 +1,4 @@
-from shared_code import Messenger
+from shared_code import messenger
 from azure.servicebus import ServiceBusClient, ServiceBusMessage
 
 import logging
@@ -55,7 +55,7 @@ def main(req: func.HttpRequest, msgOut: func.Out[str], msgSubscriptionUpdateOut:
     if len(validationToken) > 0:
         service_bus_connection = os.getenv('ServiceBusConnection')
                
-        messenger = Messenger.Messenger(service_bus_connection, 'q.graph.presence.subscription.update')
+        messenger = messenger.Messenger(service_bus_connection, 'q.graph.presence.subscription.update')
         messenger.send_single_message("Test")
 
     if len(body) > 0:

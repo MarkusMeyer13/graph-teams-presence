@@ -3,5 +3,11 @@
     "python.linting.enabled": true,
     "python.analysis.extraPaths": [
         "./PresenceWebhook"
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "PresenceWebhook"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true
 }
